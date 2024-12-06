@@ -1,0 +1,43 @@
+class <%= file_name.camelize.pluralize %>Controller < ApplicationController
+  before_action :set_<%= file_name %>, only: [:show, :update, :destroy]
+
+  def index
+    @<%= file_name.pluralize %> = <%= file_name.camelize %>.all
+    render json: @<%= file_name.pluralize %>
+  end
+
+  def show
+    render json: @<%= file_name %>
+  end
+
+  def create
+    @<%= file_name %> = <%= file_name.camelize %>.new(<%= file_name %>_params)
+    if @<%= file_name %>.save
+      render json: @<%= file_name %>, status: :created
+    else
+      render json: @<%= file_name %>.errors, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    if @<%= file_name %>.update(<%= file_name %>_params)
+      render json: @<%= file_name %>
+    else
+      render json: @<%= file_name %>.errors, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @<%= file_name %>.destroy
+  end
+
+  private
+
+  def set_<%= file_name %>
+    @<%= file_name %> = <%= file_name.camelize %>.find(params[:id])
+  end
+
+  def <%= file_name %>_params
+    params.require(:<%= file_name %>).permit(<%= fields.map { |f| ":#{f.split(':').first}" }.join(', ') %>)
+  end
+end

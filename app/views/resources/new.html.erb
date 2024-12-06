@@ -1,0 +1,31 @@
+<h1>Create a New Resource</h1>
+
+<%= form_with url: resources_path, method: :post, local: true do |form| %>
+  <div>
+    <%= form.label :resource_name, "Resource Name" %>
+    <%= form.text_field :resource_name, required: true %>
+  </div>
+  
+  <div id="fields-container">
+    <h3>Fields</h3>
+    <div class="field-group">
+      <%= text_field_tag 'fields[][name]', nil, placeholder: 'Field Name', required: true %>
+      <%= select_tag 'fields[][type]', options_for_select(['string', 'text', 'integer', 'decimal', 'boolean', 'date', 'datetime']), required: true %>
+    </div>
+  </div>
+
+  <button type="button" id="add-field">Add Field</button>
+  
+  <div>
+    <%= form.submit "Generate Resource" %>
+  </div>
+<% end %>
+
+<script>
+  document.getElementById("add-field").addEventListener("click", function() {
+    const container = document.getElementById("fields-container");
+    const newFieldGroup = document.querySelector(".field-group").cloneNode(true);
+    newFieldGroup.querySelectorAll("input, select").forEach(el => el.value = "");
+    container.appendChild(newFieldGroup);
+  });
+</script>

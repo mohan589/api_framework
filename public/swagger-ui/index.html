@@ -1,0 +1,12 @@
+<script>
+  const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+  const swaggerUI = SwaggerUIBundle({
+    url: "/api-docs/v1/swagger.yaml", // Your Swagger docs URL
+    dom_id: '#swagger-ui', // The element that holds Swagger UI
+    requestInterceptor: (request) => {
+      request.headers['X-CSRF-Token'] = csrfToken;
+      return request;
+    }
+  });
+</script>
