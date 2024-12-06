@@ -1,3 +1,5 @@
+require 'rails/generators'
+
 class ResourcesController < ApplicationController
 
   def new
@@ -13,11 +15,8 @@ class ResourcesController < ApplicationController
     fields = params[:fields].map { |field| "#{field[:name]}:#{field[:type]}" }
 
     begin
-      # Step 1: Run the generator programmatically to generate the resource
-      system("rails g crud_resource #{resource_name} #{fields.join(' ')}")
-
-      # Step 2: Run migrations programmatically
-      result = system("rails db:migrate")
+      Rails::Generators.invoke("crud_resource", [ resource_name, *fields ])
+      result = ActiveRecord::MigrationContext.new("db/migrate").migrate
 
       if result
         flash[:notice] = "Resource '#{resource_name}' created and migrations ran successfully!"
@@ -25,7 +24,6 @@ class ResourcesController < ApplicationController
         raise "Migration failed. Please check the migration file for '#{resource_name}'."
       end
 
-      # Step 3: Generate the Swagger docs (Swaggerize)
       swagger_result = system("rake rswag:specs:swaggerize")
 
       if swagger_result
