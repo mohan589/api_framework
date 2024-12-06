@@ -5,12 +5,16 @@
     <%= form.label :resource_name, "Resource Name" %>
     <%= form.text_field :resource_name, required: true %>
   </div>
-  
+
   <div id="fields-container">
     <h3>Fields</h3>
     <div class="field-group">
-      <%= text_field_tag 'fields[][name]', nil, placeholder: 'Field Name', required: true %>
-      <%= select_tag 'fields[][type]', options_for_select(['string', 'text', 'integer', 'decimal', 'boolean', 'date', 'datetime']), required: true %>
+      <div class="field-item">
+        <%= text_field_tag 'fields[][name]', nil, placeholder: 'Field Name', required: true %>
+      </div>
+      <div class="field-item">
+        <%= select_tag 'fields[][type]', options_for_select(['string', 'text', 'integer', 'decimal', 'boolean', 'date', 'datetime']), required: true %>
+      </div>
     </div>
   </div>
 
@@ -20,6 +24,76 @@
     <%= form.submit "Generate Resource" %>
   </div>
 <% end %>
+
+<style>
+  h1 {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+  }
+
+  #fields-container {
+    margin-top: 20px;
+  }
+
+  .field-group {
+    display: flex;
+    margin-bottom: 15px;
+  }
+
+  .field-item {
+    flex: 1;
+    margin-right: 10px;
+  }
+
+  .field-item:last-child {
+    margin-right: 0;
+  }
+
+  .field-item input,
+  .field-item select {
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+  }
+
+  button#add-field {
+    margin-top: 15px;
+    padding: 8px 16px;
+    margin-bottom: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  button#add-field:hover {
+    background-color: #0056b3;
+  }
+
+  div {
+    margin-bottom: 10px;
+  }
+
+  form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+  }
+
+  input, select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+</style>
 
 <script>
   document.getElementById("add-field").addEventListener("click", function() {
