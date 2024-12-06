@@ -1,2 +1,0 @@
-class Proto < ApplicationRecord
-end

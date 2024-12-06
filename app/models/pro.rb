@@ -1,2 +1,0 @@
-class Pro < ApplicationRecord
-end

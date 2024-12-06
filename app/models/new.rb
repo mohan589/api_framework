@@ -1,2 +1,0 @@
-class New < ApplicationRecord
-end
