@@ -1,4 +1,8 @@
+require_relative "../services/whitelisted_routes"
+
 class BasicAuth
+  include WhitelistedRoutes
+
   def initialize(app)
     @app = app
   end
@@ -7,7 +11,7 @@ class BasicAuth
     request = Rack::Request.new(env)
 
     # Apply basic auth only to /resources path
-    if request.path.start_with?('/resources/new') || !request.path.match?(/^\/api-docs(\/.*)?$/)
+    if WhitelistedRoutes.whitelisted?(request.path) || !request.path.match?(/^\/api-docs(\/.*)?$/)
       auth = Rack::Auth::Basic::Request.new(env)
 
       unless auth.provided? && auth.basic? && valid_credentials?(auth.credentials)
