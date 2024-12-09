@@ -54,3 +54,8 @@ gem 'rswag-ui'
 gem 'rswag-api'
 gem 'rswag-specs'
 gem 'rspec-rails', group: [:development, :test]
+
+gem 'jwt'
+gem 'activesupport'
+gem 'byebug'
+gem 'dotenv-rails', groups: [:development, :test]

@@ -1,12 +1,4 @@
 Rails.application.routes.draw do
-  resources :news
-  resources :resos
-  resources :protos
-  resources :rests
-  resources :pros
-  resources :demos
-  resources :orders
-  resources :products
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
 
@@ -23,5 +15,5 @@ Rails.application.routes.draw do
   #   mount Rswag::Api::Engine => '/api-docs'
   # end
   resources :resources, only: [ :new, :create ]
-  root "resources#new"
+  # root "resources#new"
 end

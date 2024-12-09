@@ -1,6 +1,9 @@
 require_relative "boot"
 
 require "rails/all"
+require_relative "../app/middleware/basic_auth"
+require_relative "../app/middleware/authenticate_request"
+require 'rake'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -10,6 +13,7 @@ module ApiFramework
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
+    config.autoload_paths << Rails.root.join('app', 'middleware')
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
@@ -30,5 +34,7 @@ module ApiFramework
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    config.middleware.use BasicAuth
+    config.middleware.use AuthenticateRequest
   end
 end
