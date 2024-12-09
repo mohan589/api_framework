@@ -24,7 +24,7 @@ class BasicAuth
     username, password = credentials
     stripped_password = password.gsub(/[^0-9A-Za-z]/, '')
     generated_password =  PasswordGenerator.generate_password(username).gsub(/[^0-9A-Za-z]/, '')
-    username == 'admin' &&  stripped_password == generated_password # Replace with your logic or environment variables
+    username == ENV['BASIC_AUTH_USER'] &&  stripped_password == generated_password # Replace with your logic or environment variables
   end
 
   def unauthorized_response
